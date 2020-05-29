@@ -6,6 +6,9 @@ module.exports = {
     filename: 'main.js',
     path: path.join(__dirname, 'public'),
   },
+  optimization: {
+    minimize: false,
+  },
   module: {
     rules: [
       {

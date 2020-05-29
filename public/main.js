@@ -1,1 +1,491 @@
-!function(e){var t={};function r(n){if(t[n])return t[n].exports;var o=t[n]={i:n,l:!1,exports:{}};return e[n].call(o.exports,o,o.exports,r),o.l=!0,o.exports}r.m=e,r.c=t,r.d=function(e,t,n){r.o(e,t)||Object.defineProperty(e,t,{enumerable:!0,get:n})},r.r=function(e){"undefined"!=typeof Symbol&&Symbol.toStringTag&&Object.defineProperty(e,Symbol.toStringTag,{value:"Module"}),Object.defineProperty(e,"__esModule",{value:!0})},r.t=function(e,t){if(1&t&&(e=r(e)),8&t)return e;if(4&t&&"object"==typeof e&&e&&e.__esModule)return e;var n=Object.create(null);if(r.r(n),Object.defineProperty(n,"default",{enumerable:!0,value:e}),2&t&&"string"!=typeof e)for(var o in e)r.d(n,o,function(t){return e[t]}.bind(null,o));return n},r.n=function(e){var t=e&&e.__esModule?function(){return e.default}:function(){return e};return r.d(t,"a",t),t},r.o=function(e,t){return Object.prototype.hasOwnProperty.call(e,t)},r.p="",r(r.s=3)}([function(e,t){e.exports={PATH_SEPARATOR:".",TARGET:Symbol("target"),UNSUBSCRIBE:Symbol("unsubscribe")}},function(e,t,r){"use strict";e.exports=Array.isArray},function(e,t,r){"use strict";e.exports=e=>"symbol"==typeof e},function(e,t,r){"use strict";const{TARGET:n,UNSUBSCRIBE:o}=r(0),l=r(4),i=r(1),u=r(2),c=(e,t)=>void 0!==e&&void 0!==t&&Object.is(e.value,t.value)&&(e.writable||!1)===(t.writable||!1)&&(e.enumerable||!1)===(t.enumerable||!1)&&(e.configurable||!1)===(t.configurable||!1),s=e=>i(e)?e.slice():{...e},f=(e,t,r={})=>{const f=Symbol("ProxyTarget");let a,p,g=!1,b=!1,d=!1;const y=r.equals||Object.is;let v=new WeakMap,R=new WeakMap,S=new WeakMap;const O=(e,r,n,o)=>{if(!d)if(g){if(g&&p&&void 0!==n&&void 0!==o&&"length"!==r){let t=p;e!==a&&(e=l.after(e,a),l.walk(e,e=>{t[e]=s(t[e]),t=t[e]})),t[r]=n}b=!0}else t(l.concat(e,r),o,n)},x=(e,t)=>{let r=null!==v&&v.get(e);if(r&&(r=r.get(t)),r)return r;r=new Map,v.set(e,r);let n=r.get(t);return n||(n=Reflect.getOwnPropertyDescriptor(e,t),r.set(t,n)),n},P=(e,t)=>{const r=v?v.get(e):void 0;r&&r.delete(t)},m=(e,t)=>{if(d)return e;R.set(e,t);let r=S.get(e);return void 0===r&&(r=new Proxy(e,A),S.set(e,r)),r},w=e=>d||!0===r.ignoreSymbols&&u(e)||!0===r.ignoreUnderscores&&"_"===e.charAt(0)||void 0!==r.ignoreKeys&&r.ignoreKeys.includes(e),A={get(e,t,i){if(t===f||t===n)return e;if(t===o&&null!==R&&""===R.get(e))return(e=>(d=!0,v=null,R=null,S=null,e))(e);const u=Reflect.get(e,t,i);if((e=>null===e||"object"!=typeof e&&"function"!=typeof e)(u)||(e=>e instanceof RegExp||e instanceof Number)(u)||"constructor"===t||!0===r.isShallow||w(t))return u;const c=x(e,t);if(c&&!c.configurable){if(c.set&&!c.get)return;if(!1===c.writable)return u}return m(u,l.concat(R.get(e),t))},set(e,t,r,n){r&&void 0!==r[f]&&(r=r[f]);const o=w(t),l=o?null:Reflect.get(e,t,n);let i=!0;return(!(t in e)||!y(l,r))&&(i=Reflect.set(e[f]||e,t,r),!o&&i&&O(R.get(e),t,l,r)),i},defineProperty(e,t,r){let n=!0;return c(r,x(e,t))||(n=Reflect.defineProperty(e,t,r),!n||w(t)||c()||(P(e,t),O(R.get(e),t,void 0,r.value))),n},deleteProperty(e,t){if(!Reflect.has(e,t))return!0;const r=w(t),n=r?null:Reflect.get(e,t),o=Reflect.deleteProperty(e,t);return!r&&o&&(P(e,t),O(R.get(e),t,n)),o},apply(e,t,r){const n=t instanceof Date;if(n&&(t=t[f]),!g){g=!0,n&&(p=t.valueOf()),(i(t)||"[object Object]"===toString.call(t))&&(p=s(t[f])),a=l.initial(R.get(e));const o=Reflect.apply(e,t,r);return g=!1,(b||n&&!y(p,t.valueOf()))&&(O(a,"",p,t[f]||t),p=null,b=!1),o}return Reflect.apply(e,t,r)}},h=m(e,!0===r.pathAsArray?[]:"");return t=t.bind(h),h};f.target=e=>e[n]||e,f.unsubscribe=e=>e[o]||e,e.exports=f},function(e,t,r){"use strict";const{PATH_SEPARATOR:n}=r(0),o=r(1),l=r(2);e.exports={after:(e,t)=>o(e)?e.slice(t.length):""===t?e:e.slice(t.length+1),concat:(e,t)=>o(e)?(e=e.slice(),t&&e.push(t),e):t&&void 0!==t.toString?(""!==e&&(e+=n),l(t)?e+"Symbol("+t.description+")":e+t):e,initial:e=>{if(o(e))return e.slice(0,-1);if(""===e)return e;const t=e.lastIndexOf(n);return-1===t?"":e.slice(0,t)},walk:(e,t)=>{if(o(e))e.forEach(t);else if(""!==e){let r=0,o=e.indexOf(n);if(-1===o)t(e);else for(;r<e.length;)-1===o&&(o=e.length),t(e.slice(r,o)),r=o+1,o=e.indexOf(n,r)}}}}]);
+/******/ (function(modules) { // webpackBootstrap
+/******/ 	// The module cache
+/******/ 	var installedModules = {};
+/******/
+/******/ 	// The require function
+/******/ 	function __webpack_require__(moduleId) {
+/******/
+/******/ 		// Check if module is in cache
+/******/ 		if(installedModules[moduleId]) {
+/******/ 			return installedModules[moduleId].exports;
+/******/ 		}
+/******/ 		// Create a new module (and put it into the cache)
+/******/ 		var module = installedModules[moduleId] = {
+/******/ 			i: moduleId,
+/******/ 			l: false,
+/******/ 			exports: {}
+/******/ 		};
+/******/
+/******/ 		// Execute the module function
+/******/ 		modules[moduleId].call(module.exports, module, module.exports, __webpack_require__);
+/******/
+/******/ 		// Flag the module as loaded
+/******/ 		module.l = true;
+/******/
+/******/ 		// Return the exports of the module
+/******/ 		return module.exports;
+/******/ 	}
+/******/
+/******/
+/******/ 	// expose the modules object (__webpack_modules__)
+/******/ 	__webpack_require__.m = modules;
+/******/
+/******/ 	// expose the module cache
+/******/ 	__webpack_require__.c = installedModules;
+/******/
+/******/ 	// define getter function for harmony exports
+/******/ 	__webpack_require__.d = function(exports, name, getter) {
+/******/ 		if(!__webpack_require__.o(exports, name)) {
+/******/ 			Object.defineProperty(exports, name, { enumerable: true, get: getter });
+/******/ 		}
+/******/ 	};
+/******/
+/******/ 	// define __esModule on exports
+/******/ 	__webpack_require__.r = function(exports) {
+/******/ 		if(typeof Symbol !== 'undefined' && Symbol.toStringTag) {
+/******/ 			Object.defineProperty(exports, Symbol.toStringTag, { value: 'Module' });
+/******/ 		}
+/******/ 		Object.defineProperty(exports, '__esModule', { value: true });
+/******/ 	};
+/******/
+/******/ 	// create a fake namespace object
+/******/ 	// mode & 1: value is a module id, require it
+/******/ 	// mode & 2: merge all properties of value into the ns
+/******/ 	// mode & 4: return value when already ns object
+/******/ 	// mode & 8|1: behave like require
+/******/ 	__webpack_require__.t = function(value, mode) {
+/******/ 		if(mode & 1) value = __webpack_require__(value);
+/******/ 		if(mode & 8) return value;
+/******/ 		if((mode & 4) && typeof value === 'object' && value && value.__esModule) return value;
+/******/ 		var ns = Object.create(null);
+/******/ 		__webpack_require__.r(ns);
+/******/ 		Object.defineProperty(ns, 'default', { enumerable: true, value: value });
+/******/ 		if(mode & 2 && typeof value != 'string') for(var key in value) __webpack_require__.d(ns, key, function(key) { return value[key]; }.bind(null, key));
+/******/ 		return ns;
+/******/ 	};
+/******/
+/******/ 	// getDefaultExport function for compatibility with non-harmony modules
+/******/ 	__webpack_require__.n = function(module) {
+/******/ 		var getter = module && module.__esModule ?
+/******/ 			function getDefault() { return module['default']; } :
+/******/ 			function getModuleExports() { return module; };
+/******/ 		__webpack_require__.d(getter, 'a', getter);
+/******/ 		return getter;
+/******/ 	};
+/******/
+/******/ 	// Object.prototype.hasOwnProperty.call
+/******/ 	__webpack_require__.o = function(object, property) { return Object.prototype.hasOwnProperty.call(object, property); };
+/******/
+/******/ 	// __webpack_public_path__
+/******/ 	__webpack_require__.p = "";
+/******/
+/******/
+/******/ 	// Load entry module and return exports
+/******/ 	return __webpack_require__(__webpack_require__.s = 3);
+/******/ })
+/************************************************************************/
+/******/ ([
+/* 0 */
+/***/ (function(module, exports) {
+
+module.exports = {
+  PATH_SEPARATOR: '.',
+  TARGET: Symbol('target'),
+  UNSUBSCRIBE: Symbol('unsubscribe')
+};
+
+/***/ }),
+/* 1 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+module.exports = Array.isArray;
+
+/***/ }),
+/* 2 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
+
+module.exports = function (value) {
+  return _typeof(value) === 'symbol';
+};
+
+/***/ }),
+/* 3 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
+
+function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { ownKeys(Object(source), true).forEach(function (key) { _defineProperty(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { ownKeys(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
+
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
+function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
+
+var _require = __webpack_require__(0),
+    TARGET = _require.TARGET,
+    UNSUBSCRIBE = _require.UNSUBSCRIBE;
+
+var path = __webpack_require__(4);
+
+var isArray = __webpack_require__(1);
+
+var isSymbol = __webpack_require__(2);
+
+var isPrimitive = function isPrimitive(value) {
+  return value === null || _typeof(value) !== 'object' && typeof value !== 'function';
+};
+
+var isBuiltinWithoutMutableMethods = function isBuiltinWithoutMutableMethods(value) {
+  return value instanceof RegExp || value instanceof Number;
+};
+
+var isBuiltinWithMutableMethods = function isBuiltinWithMutableMethods(value) {
+  return value instanceof Date;
+};
+
+var isSameDescriptor = function isSameDescriptor(a, b) {
+  return a !== undefined && b !== undefined && Object.is(a.value, b.value) && (a.writable || false) === (b.writable || false) && (a.enumerable || false) === (b.enumerable || false) && (a.configurable || false) === (b.configurable || false);
+};
+
+var shallowClone = function shallowClone(value) {
+  if (isArray(value)) {
+    return value.slice();
+  }
+
+  return _objectSpread({}, value);
+};
+
+var onChange = function onChange(object, _onChange) {
+  var options = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : {};
+  var proxyTarget = Symbol('ProxyTarget');
+  var inApply = false;
+  var changed = false;
+  var applyPath;
+  var applyPrevious;
+  var isUnsubscribed = false;
+  var equals = options.equals || Object.is;
+  var propCache = new WeakMap();
+  var pathCache = new WeakMap();
+  var proxyCache = new WeakMap();
+
+  var handleChange = function handleChange(changePath, property, previous, value) {
+    if (isUnsubscribed) {
+      return;
+    }
+
+    if (!inApply) {
+      _onChange(path.concat(changePath, property), value, previous);
+
+      return;
+    }
+
+    if (inApply && applyPrevious && previous !== undefined && value !== undefined && property !== 'length') {
+      var item = applyPrevious;
+
+      if (changePath !== applyPath) {
+        changePath = path.after(changePath, applyPath);
+        path.walk(changePath, function (key) {
+          item[key] = shallowClone(item[key]);
+          item = item[key];
+        });
+      }
+
+      item[property] = previous;
+    }
+
+    changed = true;
+  };
+
+  var getOwnPropertyDescriptor = function getOwnPropertyDescriptor(target, property) {
+    var props = propCache !== null && propCache.get(target);
+
+    if (props) {
+      props = props.get(property);
+    }
+
+    if (props) {
+      return props;
+    }
+
+    props = new Map();
+    propCache.set(target, props);
+    var prop = props.get(property);
+
+    if (!prop) {
+      prop = Reflect.getOwnPropertyDescriptor(target, property);
+      props.set(property, prop);
+    }
+
+    return prop;
+  };
+
+  var invalidateCachedDescriptor = function invalidateCachedDescriptor(target, property) {
+    var props = propCache ? propCache.get(target) : undefined;
+
+    if (props) {
+      props.delete(property);
+    }
+  };
+
+  var buildProxy = function buildProxy(value, path) {
+    if (isUnsubscribed) {
+      return value;
+    }
+
+    pathCache.set(value, path);
+    var proxy = proxyCache.get(value);
+
+    if (proxy === undefined) {
+      proxy = new Proxy(value, handler);
+      proxyCache.set(value, proxy);
+    }
+
+    return proxy;
+  };
+
+  var unsubscribe = function unsubscribe(target) {
+    isUnsubscribed = true;
+    propCache = null;
+    pathCache = null;
+    proxyCache = null;
+    return target;
+  };
+
+  var ignoreProperty = function ignoreProperty(property) {
+    return isUnsubscribed || options.ignoreSymbols === true && isSymbol(property) || options.ignoreUnderscores === true && property.charAt(0) === '_' || options.ignoreKeys !== undefined && options.ignoreKeys.includes(property);
+  };
+
+  var handler = {
+    get: function get(target, property, receiver) {
+      if (property === proxyTarget || property === TARGET) {
+        return target;
+      }
+
+      if (property === UNSUBSCRIBE && pathCache !== null && pathCache.get(target) === '') {
+        return unsubscribe(target);
+      }
+
+      var value = Reflect.get(target, property, receiver);
+
+      if (isPrimitive(value) || isBuiltinWithoutMutableMethods(value) || property === 'constructor' || options.isShallow === true || ignoreProperty(property)) {
+        return value;
+      } // Preserve invariants
+
+
+      var descriptor = getOwnPropertyDescriptor(target, property);
+
+      if (descriptor && !descriptor.configurable) {
+        if (descriptor.set && !descriptor.get) {
+          return undefined;
+        }
+
+        if (descriptor.writable === false) {
+          return value;
+        }
+      }
+
+      return buildProxy(value, path.concat(pathCache.get(target), property));
+    },
+    set: function set(target, property, value, receiver) {
+      if (value && value[proxyTarget] !== undefined) {
+        value = value[proxyTarget];
+      }
+
+      var ignore = ignoreProperty(property);
+      var previous = ignore ? null : Reflect.get(target, property, receiver);
+      var isChanged = !(property in target) || !equals(previous, value);
+      var result = true;
+
+      if (isChanged) {
+        result = Reflect.set(target[proxyTarget] || target, property, value);
+
+        if (!ignore && result) {
+          handleChange(pathCache.get(target), property, previous, value);
+        }
+      }
+
+      return result;
+    },
+    defineProperty: function defineProperty(target, property, descriptor) {
+      var result = true;
+
+      if (!isSameDescriptor(descriptor, getOwnPropertyDescriptor(target, property))) {
+        result = Reflect.defineProperty(target, property, descriptor);
+
+        if (result && !ignoreProperty(property) && !isSameDescriptor()) {
+          invalidateCachedDescriptor(target, property);
+          handleChange(pathCache.get(target), property, undefined, descriptor.value);
+        }
+      }
+
+      return result;
+    },
+    deleteProperty: function deleteProperty(target, property) {
+      if (!Reflect.has(target, property)) {
+        return true;
+      }
+
+      var ignore = ignoreProperty(property);
+      var previous = ignore ? null : Reflect.get(target, property);
+      var result = Reflect.deleteProperty(target, property);
+
+      if (!ignore && result) {
+        invalidateCachedDescriptor(target, property);
+        handleChange(pathCache.get(target), property, previous);
+      }
+
+      return result;
+    },
+    apply: function apply(target, thisArg, argumentsList) {
+      var compare = isBuiltinWithMutableMethods(thisArg);
+
+      if (compare) {
+        thisArg = thisArg[proxyTarget];
+      }
+
+      if (!inApply) {
+        inApply = true;
+
+        if (compare) {
+          applyPrevious = thisArg.valueOf();
+        }
+
+        if (isArray(thisArg) || toString.call(thisArg) === '[object Object]') {
+          applyPrevious = shallowClone(thisArg[proxyTarget]);
+        }
+
+        applyPath = path.initial(pathCache.get(target));
+        var result = Reflect.apply(target, thisArg, argumentsList);
+        inApply = false;
+
+        if (changed || compare && !equals(applyPrevious, thisArg.valueOf())) {
+          handleChange(applyPath, '', applyPrevious, thisArg[proxyTarget] || thisArg);
+          applyPrevious = null;
+          changed = false;
+        }
+
+        return result;
+      }
+
+      return Reflect.apply(target, thisArg, argumentsList);
+    }
+  };
+  var proxy = buildProxy(object, options.pathAsArray === true ? [] : '');
+  _onChange = _onChange.bind(proxy);
+  return proxy;
+};
+
+onChange.target = function (proxy) {
+  return proxy[TARGET] || proxy;
+};
+
+onChange.unsubscribe = function (proxy) {
+  return proxy[UNSUBSCRIBE] || proxy;
+};
+
+module.exports = onChange;
+
+/***/ }),
+/* 4 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+var _require = __webpack_require__(0),
+    PATH_SEPARATOR = _require.PATH_SEPARATOR;
+
+var isArray = __webpack_require__(1);
+
+var isSymbol = __webpack_require__(2);
+
+module.exports = {
+  after: function after(path, subPath) {
+    if (isArray(path)) {
+      return path.slice(subPath.length);
+    }
+
+    if (subPath === '') {
+      return path;
+    }
+
+    return path.slice(subPath.length + 1);
+  },
+  concat: function concat(path, key) {
+    if (isArray(path)) {
+      path = path.slice();
+
+      if (key) {
+        path.push(key);
+      }
+
+      return path;
+    }
+
+    if (key && key.toString !== undefined) {
+      if (path !== '') {
+        path += PATH_SEPARATOR;
+      }
+
+      if (isSymbol(key)) {
+        return path + 'Symbol(' + key.description + ')';
+      }
+
+      return path + key;
+    }
+
+    return path;
+  },
+  initial: function initial(path) {
+    if (isArray(path)) {
+      return path.slice(0, -1);
+    }
+
+    if (path === '') {
+      return path;
+    }
+
+    var index = path.lastIndexOf(PATH_SEPARATOR);
+
+    if (index === -1) {
+      return '';
+    }
+
+    return path.slice(0, index);
+  },
+  walk: function walk(path, callback) {
+    if (isArray(path)) {
+      path.forEach(callback);
+    } else if (path !== '') {
+      var position = 0;
+      var index = path.indexOf(PATH_SEPARATOR);
+
+      if (index === -1) {
+        callback(path);
+      } else {
+        while (position < path.length) {
+          if (index === -1) {
+            index = path.length;
+          }
+
+          callback(path.slice(position, index));
+          position = index + 1;
+          index = path.indexOf(PATH_SEPARATOR, position);
+        }
+      }
+    }
+  }
+};
+
+/***/ })
+/******/ ]);
