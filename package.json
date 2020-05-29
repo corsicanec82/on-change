@@ -15,7 +15,8 @@
 	},
 	"scripts": {
 		"test": "xo && ava && tsd",
-		"bench": "karma start karma.bench.conf.js"
+		"bench": "karma start karma.bench.conf.js",
+		"build": "npx webpack -p"
 	},
 	"files": [
 		"index.js",
@@ -39,10 +40,15 @@
 		"listener"
 	],
 	"devDependencies": {
+		"@babel/core": "^7.10.1",
+		"@babel/preset-env": "^7.10.1",
 		"ava": "^3.5.0",
+		"babel-loader": "^8.1.0",
 		"display-value": "^1.6.0",
 		"karma-webpack-bundle": "^0.1.2",
 		"tsd": "^0.11.0",
+		"webpack": "^4.43.0",
+		"webpack-cli": "^3.3.11",
 		"xo": "^0.28.0"
 	}
 }
